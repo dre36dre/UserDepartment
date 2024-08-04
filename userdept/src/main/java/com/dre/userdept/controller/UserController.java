@@ -40,14 +40,12 @@ public User insert(@RequestBody User user){
 	return result;
 }
 
-@DeleteMapping("/{id}")
-public User<String> delete(@PathVariable("id") Long id){
-	Optional<User> existingUser= this.repository.findById(id);
-	if(existingUser.isPresent()){
-            this.delete(existingProduct.get());
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+@DeleteMapping(value="delete")
+public ResponseEntity<String> delete(@ResquestParam Long id){
+	 
+	 repository.deleteByid(id);
+	
+        return ResponseEntity<String>("User deletado com sucesso",HttpStatus.OK);
     }
 	
 	

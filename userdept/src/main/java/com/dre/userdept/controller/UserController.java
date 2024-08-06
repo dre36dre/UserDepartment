@@ -41,13 +41,17 @@ public User insert(@RequestBody User user){
 }
 
 @DeleteMapping(value="delete")
-public ResponseEntity<String> delete(@ResquestParam Long id){
+@ResponseStatus(HttpStatus.NO_CONTENT)
+public void  delete(@PathVariable Long id){
 	 
-	 repository.deleteByid(id);
-	
-        return ResponseEntity<String>("User deletado com sucesso",HttpStatus.OK);
-    }
-	
+	 repository.deleteById(id);
+}
+
+@PutMapping("/{id}")
+public User atualizar(@PathVariable Long id, @RequestBody User user) {
+	User userAtual=repository.findById(id).get();
+	BeanUtils.copyProperties(user, userAtual, "id");
+	return repository.save(userAtual);
 	
 }
 }
